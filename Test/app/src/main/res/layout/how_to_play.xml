@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgorund2">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/bar_back">
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/music"
+            android:background="@drawable/btn_play"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/music"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/set"
+            android:background="@drawable/btn_music"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/set"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/back"
+            android:background="@drawable/btn_set"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/home"
+            android:background="@drawable/btn_back"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_home"
+            android:onClick="moveActivity"/>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/how_to_play_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/how_to_play_SliderDots"
+        android:layout_below="@+id/how_to_play_viewPager"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

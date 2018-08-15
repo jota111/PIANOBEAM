@@ -1,0 +1,177 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.test.test.GameActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/bar_back"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/music"
+            android:background="@drawable/btn_play"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/music"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/set"
+            android:background="@drawable/btn_music"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/set"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/back"
+            android:background="@drawable/btn_set"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@+id/home"
+            android:background="@drawable/btn_back"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_home"
+            android:onClick="moveActivity"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#000000">
+
+        <ImageView
+            android:id="@+id/combo_img"
+            android:layout_width="53dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/combo"/>
+
+        <ImageView
+            android:id="@+id/c_img1"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/combo_img"
+            android:background="@drawable/green0"/>
+
+        <ImageView
+            android:id="@+id/c_img2"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/c_img1"
+            android:background="@drawable/blue0"/>
+
+        <ImageView
+            android:id="@+id/c_img3"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/c_img2"
+            android:background="@drawable/red0"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btn_velocity1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity1"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity2"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity3"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity4"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity5"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity6"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity7"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity7"
+                android:onClick="clickVelocity"/>
+
+            <ImageView
+                android:id="@+id/btn_velocity8"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_velocity8"
+                android:onClick="clickVelocity"/>
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/btn_play_or_stop"
+            android:layout_width="65dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/start"
+            android:onClick="clickPlayOrStop"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/test"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+</LinearLayout>

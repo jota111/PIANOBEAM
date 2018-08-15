@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp">
+
+        <ImageView
+            android:layout_width="380dp"
+            android:layout_height="36dp"
+            android:background="@drawable/explain_vertical"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <com.test.test.DrawGunban
+            android:id="@+id/piano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/black_gunban"
+            android:layout_width="103dp"
+            android:layout_height="36dp"
+            android:background="@drawable/black_gunban"/>
+
+        <ImageView
+            android:id="@+id/btn_plus_black_vertical"
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:background="@drawable/btn_plus"/>
+
+        <ImageView
+            android:id="@+id/btn_minus_black_vertical"
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/btn_minus"/>
+
+        <ImageView
+            android:id="@+id/white_gunban"
+            android:layout_width="103dp"
+            android:layout_height="36dp"
+            android:background="@drawable/white_gunban"/>
+
+        <ImageView
+            android:id="@+id/btn_plus_white_vertical"
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:background="@drawable/btn_plus"/>
+
+        <ImageView
+            android:id="@+id/btn_minus_white_vertical"
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:background="@drawable/btn_minus"/>
+    </LinearLayout>
+</LinearLayout>

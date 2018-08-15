@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="54dp"
+        android:layout_marginRight="54dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/music"
+            android:layout_width="153dp"
+            android:layout_height="90dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_start_music"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/set"
+            android:layout_width="153dp"
+            android:layout_height="90dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_start_set"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="153dp"
+            android:layout_height="90dp"
+            android:background="@drawable/btn_start_play"
+            android:onClick="moveActivity"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="146dp"
+        android:layout_marginRight="146dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/faq"
+            android:layout_width="153dp"
+            android:layout_height="90dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_start_faq"
+            android:onClick="moveActivity"/>
+
+        <ImageView
+            android:id="@+id/howtoplay"
+            android:layout_width="153dp"
+            android:layout_height="90dp"
+            android:background="@drawable/btn_start_howtoplay"
+            android:onClick="moveActivity"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.38"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_back"
+            android:onClick="moveActivity"/>
+    </RelativeLayout>
+</LinearLayout>
