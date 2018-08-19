@@ -22,6 +22,11 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        if(thread.isAlive()){
+            thread.interrupt();
+        }
+
+        thread = new DrawBall(this);
         thread.start();
     }
 
