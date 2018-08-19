@@ -514,30 +514,43 @@ public class ScoreActivity extends AppCompatActivity {
             case R.id.play:
                 play.setBackgroundResource(R.drawable.btn_play_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
+                ScoreActivity.this.finishAffinity();
+                System.runFinalization();
+                System.exit(0);
                 break;
             case R.id.music:
                 music.setBackgroundResource(R.drawable.btn_music_entered);
                 startActivity(new Intent(ScoreActivity.this, SetPianoActivity.class));
+                ScoreActivity.this.finishAffinity();
                 break;
             case R.id.set:
                 set.setBackgroundResource(R.drawable.btn_set_entered);
                 startActivity(new Intent(ScoreActivity.this, SetPianoActivity.class));
+                ScoreActivity.this.finishAffinity();
+                System.runFinalization();
+                System.exit(0);
                 break;
             case R.id.back:
                 back.setBackgroundResource(R.drawable.btn_back_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
+                ScoreActivity.this.finishAffinity();
                 break;
             case R.id.home:
                 home.setBackgroundResource(R.drawable.btn_home_entered);
                 startActivity(new Intent(ScoreActivity.this, MenuActivity.class));
+                ScoreActivity.this.finishAffinity();
+                System.runFinalization();
+                System.exit(0);
                 break;
             case R.id.replay:
                 replay.setBackgroundResource(R.drawable.replay_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
+                ScoreActivity.this.finishAffinity();
                 break;
             case R.id.home2:
                 home2.setBackgroundResource(R.drawable.home_entered);
                 startActivity(new Intent(ScoreActivity.this, MenuActivity.class));
+                ScoreActivity.this.finishAffinity();
                 break;
         }
 

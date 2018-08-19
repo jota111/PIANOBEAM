@@ -66,6 +66,8 @@ public class GameActivity extends AppCompatActivity {
 
         panel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
         ViewGroup root = (ViewGroup)findViewById(R.id.game);
+        if(panel.getParent()!=null)
+            ((ViewGroup)panel.getParent()).removeView(panel);
         root.addView(panel, 2);
 
         ToggleButton play_or_stop = (ToggleButton)root.findViewById(R.id.btn_play_or_stop);
@@ -342,8 +344,8 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(new Intent(GameActivity.this, ScoreActivity.class));
                 record.cancel(true);
                 ActivityCompat.finishAffinity(GameActivity.this);
-                System.runFinalization();
-                System.exit(0);
+                //System.runFinalization();
+                //System.exit(0);
             } catch (Throwable t) {
                 Log.e("AudioRecord", "Recording Failed");
             }
@@ -662,34 +664,18 @@ public class GameActivity extends AppCompatActivity {
             case R.id.music:
                 music.setBackgroundResource(R.drawable.btn_music_entered);
                 startActivity(new Intent(GameActivity.this, SelectGenreActivity.class));
-                record.cancel(true);
-                ActivityCompat.finishAffinity(GameActivity.this);
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.set:
                 set.setBackgroundResource(R.drawable.btn_set_entered);
                 startActivity(new Intent(GameActivity.this, SetPianoActivity.class));
-                record.cancel(true);
-                ActivityCompat.finishAffinity(GameActivity.this);
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.back:
                 back.setBackgroundResource(R.drawable.btn_back_entered);
                 startActivity(new Intent(GameActivity.this, SelectMusicActivity.class));
-                record.cancel(true);
-                ActivityCompat.finishAffinity(GameActivity.this);
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.home:
                 home.setBackgroundResource(R.drawable.btn_home_entered);
                 startActivity(new Intent(GameActivity.this, MenuActivity.class));
-                record.cancel(true);
-                ActivityCompat.finishAffinity(GameActivity.this);
-                System.runFinalization();
-                System.exit(0);
                 break;
         }
 
