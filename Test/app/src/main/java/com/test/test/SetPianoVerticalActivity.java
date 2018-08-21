@@ -1,6 +1,7 @@
 package com.test.test;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,19 +13,24 @@ import android.widget.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.test.test.Gunban.black_vertical;
+import static com.test.test.Gunban.count_size_change;
+import static com.test.test.Gunban.white_vertical;
+import static com.test.test.LoginActivity.logindatabaseReference;
 import static com.test.test.SetPianoOctaveActivity.gunban;
-import static com.test.test.SetPianoOctaveActivity.draw_piano;
 
 public class SetPianoVerticalActivity extends Fragment {
-    View view;
-    Timer timer_plus_white;
-    Timer timer_minus_white;
-    Timer timer_plus_black;
-    Timer timer_minus_black;
-    TimerTask timerTask_plus_white;
-    TimerTask timerTask_minus_white;
-    TimerTask timerTask_plus_black;
-    TimerTask timerTask_minus_black;
+    private View view;
+    private Timer timer_plus_white;
+    private Timer timer_minus_white;
+    private Timer timer_plus_black;
+    private Timer timer_minus_black;
+    private TimerTask timerTask_plus_white;
+    private TimerTask timerTask_minus_white;
+    private TimerTask timerTask_plus_black;
+    private TimerTask timerTask_minus_black;
+
+    private DrawGunban draw_gunban;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,13 +59,14 @@ public class SetPianoVerticalActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.set_vertical, container, false);
-        draw_piano = (DrawGunban)view.findViewById(R.id.piano);
-        draw_piano.invalidate();
+        draw_gunban = (DrawGunban)view.findViewById(R.id.piano);
+        draw_gunban.invalidate();
 
         final ImageView plus_white_vertical = (ImageView)view.findViewById(R.id.btn_plus_white_vertical);
         final ImageView minus_white_vertical = (ImageView)view.findViewById(R.id.btn_minus_white_vertical);
         final ImageView plus_black_vertical = (ImageView)view.findViewById(R.id.btn_plus_black_vertical);
         final ImageView minus_black_vertical = (ImageView)view.findViewById(R.id.btn_minus_black_vertical);
+        final ImageView finish = (ImageView)view.findViewById(R.id.btn_finish);
 
         timer_plus_white = new Timer(true);
         timer_minus_white = new Timer(true);
@@ -73,7 +80,7 @@ public class SetPianoVerticalActivity extends Fragment {
                     @Override
                     public void run(){
                         gunban.plusWhiteVertical();
-                        draw_piano.invalidate();
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -91,7 +98,7 @@ public class SetPianoVerticalActivity extends Fragment {
                     @Override
                     public void run() {
                         gunban.minusWhiteVertical();
-                        draw_piano.invalidate();
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -109,7 +116,7 @@ public class SetPianoVerticalActivity extends Fragment {
                     @Override
                     public void run() {
                         gunban.plusBlackVertical();
-                        draw_piano.invalidate();
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -127,7 +134,7 @@ public class SetPianoVerticalActivity extends Fragment {
                     @Override
                     public void run() {
                         gunban.minusBlackVertical();
-                        draw_piano.invalidate();
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -157,7 +164,7 @@ public class SetPianoVerticalActivity extends Fragment {
                                         @Override
                                         public void run() {
                                             gunban.plusWhiteVertical();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -178,11 +185,13 @@ public class SetPianoVerticalActivity extends Fragment {
 
                         if(timer_plus_white != null) {
                             timer_plus_white.cancel();
-                            timer_plus_white=null;
+                            timer_plus_white = null;
                         }
 
                         break;
                 }
+
+                logindatabaseReference.child("white_vertical").setValue(white_vertical);
 
                 return true;
             }
@@ -206,7 +215,7 @@ public class SetPianoVerticalActivity extends Fragment {
                                         @Override
                                         public void run() {
                                             gunban.minusWhiteVertical();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -228,11 +237,13 @@ public class SetPianoVerticalActivity extends Fragment {
 
                         if(timer_minus_white != null) {
                             timer_minus_white.cancel();
-                            timer_minus_white=null;
+                            timer_minus_white = null;
                         }
 
                         break;
                 }
+
+                logindatabaseReference.child("white_vertical").setValue(white_vertical);
 
                 return true;
             }
@@ -254,9 +265,9 @@ public class SetPianoVerticalActivity extends Fragment {
                                 public void run() {
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
-                                        public void run(){
+                                        public void run() {
                                             gunban.plusBlackVertical();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -278,11 +289,13 @@ public class SetPianoVerticalActivity extends Fragment {
 
                         if(timer_plus_black != null) {
                             timer_plus_black.cancel();
-                            timer_plus_black=null;
+                            timer_plus_black = null;
                         }
 
                         break;
                 }
+
+                logindatabaseReference.child("black_vertical").setValue(black_vertical);
 
                 return true;
             }
@@ -306,7 +319,7 @@ public class SetPianoVerticalActivity extends Fragment {
                                         @Override
                                         public void run() {
                                             gunban.minusBlackVertical();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -334,7 +347,17 @@ public class SetPianoVerticalActivity extends Fragment {
                         break;
                 }
 
+                logindatabaseReference.child("black_vertical").setValue(black_vertical);
+
                 return true;
+            }
+        });
+
+        finish.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                finish.setBackgroundResource(R.drawable.finish_entered);
+                arg0.getContext().startActivity(new Intent(arg0.getContext(), SelectGenreActivity.class));
             }
         });
 

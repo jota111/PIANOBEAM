@@ -7,11 +7,11 @@ import android.view.SurfaceHolder;
 
 import static com.test.test.Ball.WHITE;
 import static com.test.test.Ball.BLACK;
-import static com.test.test.SetPianoOctaveActivity.gunban;
 import static com.test.test.DrawGunban.x_piano_upleft;
 import static com.test.test.DrawGunban.y_piano_upleft;
 import static com.test.test.Panel.balls_right;
 import static com.test.test.Panel.balls_left;
+import static com.test.test.SetPianoOctaveActivity.gunban;
 
 class DrawBall extends Thread {
     private SurfaceHolder holder;

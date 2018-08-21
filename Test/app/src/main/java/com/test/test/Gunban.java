@@ -1,14 +1,11 @@
 package com.test.test;
 
-import static com.test.test.DrawGunban.x_piano_upleft;
-import static com.test.test.DrawGunban.y_piano_upleft;
-
 public class Gunban {
     public static float black_vertical = 230; // 검은세로
     public static float white_vertical = 381; // 하얀세로
     public static float count_size_change = 15; //가로
 
-    private int octave = 4;
+    private int octave = 3;
 
     public int getOctave() {
         return octave;
@@ -46,31 +43,11 @@ public class Gunban {
         return count_size_change;
     }
 
-    public void setCountSizeChange(float num) {
-        count_size_change = num;
-    }
-
     public void plusCountSizeChange(){
         count_size_change += 0.1;
     }
 
     public void minusCountSizeChange(){
         count_size_change -= 0.1;
-    }
-
-    public void plusXPiano() {
-        x_piano_upleft += 5;
-    }
-
-    public void minusXPiano() {
-        x_piano_upleft -= 5;
-    }
-
-    public void plusYPiano() {
-        y_piano_upleft += 5;
-    }
-
-    public void minusYPiano() {
-        y_piano_upleft -= 5;
     }
 }

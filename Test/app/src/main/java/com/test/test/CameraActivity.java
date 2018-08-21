@@ -288,11 +288,11 @@ public class CameraActivity extends AppCompatActivity {
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void onBackPressed() {
         startActivity(new Intent(CameraActivity.this, SelectGenreActivity.class));
-        CameraActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

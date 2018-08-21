@@ -2,13 +2,16 @@ package com.test.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import static com.test.test.LoginActivity.music_selected;
 import static com.test.test.LoginActivity.to_gameActivity;
+import static com.test.test.LoginActivity.id;
 
 public class SelectGenreActivity extends AppCompatActivity {
     public static final int classic_selected = 0; // 클래식 선택
@@ -18,10 +21,15 @@ public class SelectGenreActivity extends AppCompatActivity {
     public static final int childrensong_selected = 4; // 동요 선택
     public static int genre;
 
+    private TextView showid;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_genre);
         getSupportActionBar().hide();
+
+        showid = (TextView)findViewById(R.id.id);
+        showid.setText(id.getText().toString());
 
         if(!music_selected && to_gameActivity) { // 노래가 아직 선택되지 않았고, 게임 시작을 눌렀을 경우
             AlertDialog.Builder dlg = new AlertDialog.Builder(SelectGenreActivity.this);
@@ -71,7 +79,7 @@ public class SelectGenreActivity extends AppCompatActivity {
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void moveActivity(View v) {
@@ -109,11 +117,11 @@ public class SelectGenreActivity extends AppCompatActivity {
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void onBackPressed() {
         startActivity(new Intent(SelectGenreActivity.this, MenuActivity.class));
-        SelectGenreActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

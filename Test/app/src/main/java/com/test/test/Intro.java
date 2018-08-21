@@ -17,9 +17,6 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 
 public class Intro extends AppCompatActivity {
-    public final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-    public final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
@@ -31,14 +28,15 @@ public class Intro extends AppCompatActivity {
             public void onPermissionGranted() {
                 Toast.makeText(Intro.this, "권한 허가", Toast.LENGTH_SHORT).show();
                 Handler handler = new Handler();
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(Intro.this, MenuActivity.class);
+                        Intent intent = new Intent(Intro.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
-                }, 500);
+                }, 1200);
             }
 
             @Override
@@ -50,12 +48,7 @@ public class Intro extends AppCompatActivity {
             }
         };
 
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setRationaleMessage("음 인식을 위해 마이크 권한이 필요합니다.")
-                .setDeniedMessage("권한이 있어야 앱이 정상적으로 작동합니다.")
-                .setPermissions(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
+        TedPermission.with(this).setPermissionListener(permissionlistener).setRationaleMessage("음 인식을 위해 마이크 권한이 필요합니다.").setDeniedMessage("권한이 있어야 앱이 정상적으로 작동합니다.").setPermissions(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE).check();
     }
 
     public void setDisplay() {

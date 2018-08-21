@@ -17,39 +17,59 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import fftpack.RealDoubleFFT;
 
+import static com.test.test.LoginActivity.music_selected;
+import static com.test.test.Ball.velocity;
+import static com.test.test.Ball.WHITE;
+import static com.test.test.DrawGunban.y_piano_upleft;
+import static com.test.test.LoginActivity.id;
+import static com.test.test.Panel.balls_right;
+import static com.test.test.Panel.balls_left;
 import static com.test.test.ScoreActivity.GREAT;
 import static com.test.test.ScoreActivity.GOOD;
 import static com.test.test.ScoreActivity.BAD;
 import static com.test.test.ScoreActivity.great_score;
 import static com.test.test.ScoreActivity.good_score;
 import static com.test.test.ScoreActivity.bad_score;
-import static com.test.test.SelectMusicActivity.panel;
-import static com.test.test.SelectMusicActivity.answer_right;
-import static com.test.test.SelectMusicActivity.answer_left;
-import static com.test.test.DrawGunban.y_piano_upleft;
-import static com.test.test.Panel.balls_right;
-import static com.test.test.Panel.balls_left;
-import static com.test.test.Ball.sum_right_count_while;
-import static com.test.test.Ball.sum_left_count_while;
-import static com.test.test.Ball.WHITE;
-import static com.test.test.Ball.velocity;
+import static com.test.test.SelectMusicPagerAdapter.music;
+import static com.test.test.SelectMusicPagerAdapter.elise;
+import static com.test.test.SelectMusicPagerAdapter.nowhere;
+import static com.test.test.SelectMusicPagerAdapter.star;
+import static com.test.test.SelectMusicPagerAdapter.rabbit;
 import static com.test.test.SetPianoOctaveActivity.gunban;
 
 public class GameActivity extends AppCompatActivity {
+    public static Panel panel;
+    public static ArrayList<ArrayList> answer_right;
+    public static ArrayList<ArrayList> answer_left;
+    public static RecordAudio record;
+    public static int sum_right_count_while; // 오른손 누적 for문 도는 개수
+    public static int sum_left_count_while; // 왼손 누적 for문 도는 개수
+
     private RealDoubleFFT transformer;
     private int blockSize;
     private AudioRecord audioRecord;
-    public static RecordAudio record;
-
     private Canvas background;
     private Paint green_line;
     private ImageView Test;
+    private TextView showid;
+    private ImageView velocity1;
+    private ImageView velocity2;
+    private ImageView velocity3;
+    private ImageView velocity4;
+    private ImageView velocity5;
+    private ImageView velocity6;
+    private ImageView velocity7;
+    private ImageView velocity8;
+    private ImageView score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +77,45 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.game);
         getSupportActionBar().hide();
 
-        blockSize = 256;
+        panel = new Panel(this);
 
-        y_piano_upleft = y_piano_upleft - 204; // 160pixel = 40dp
-        great_score = 0;
-        good_score = 0;
-        bad_score = 0;
+        insertProtocol();
 
         panel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
         ViewGroup root = (ViewGroup)findViewById(R.id.game);
-        if(panel.getParent()!=null)
-            ((ViewGroup)panel.getParent()).removeView(panel);
+
         root.addView(panel, 2);
+
+        showid = (TextView)findViewById(R.id.id);
+        showid.setText(id.getText().toString());
+
+        velocity1 = (ImageView)findViewById(R.id.btn_velocity1);
+        velocity2 = (ImageView)findViewById(R.id.btn_velocity2);
+        velocity3 = (ImageView)findViewById(R.id.btn_velocity3);
+        velocity4 = (ImageView)findViewById(R.id.btn_velocity4);
+        velocity5 = (ImageView)findViewById(R.id.btn_velocity5);
+        velocity6 = (ImageView)findViewById(R.id.btn_velocity6);
+        velocity7 = (ImageView)findViewById(R.id.btn_velocity7);
+        velocity8 = (ImageView)findViewById(R.id.btn_velocity8);
+        score = (ImageView)findViewById(R.id.score);
+
+        velocity1.setVisibility(View.INVISIBLE);
+        velocity2.setVisibility(View.INVISIBLE);
+        velocity3.setVisibility(View.INVISIBLE);
+        velocity4.setVisibility(View.INVISIBLE);
+        velocity5.setVisibility(View.INVISIBLE);
+        velocity6.setVisibility(View.INVISIBLE);
+        velocity7.setVisibility(View.INVISIBLE);
+        velocity8.setVisibility(View.INVISIBLE);
+        //score.setVisibility(View.INVISIBLE);
+
+        blockSize = 256;
+
+        y_piano_upleft = y_piano_upleft - 218; // 160pixel = 40dp
+
+        great_score = 0;
+        good_score = 0;
+        bad_score = 0;
 
         ToggleButton play_or_stop = (ToggleButton)root.findViewById(R.id.btn_play_or_stop);
         play_or_stop.setChecked(true);
@@ -96,16 +143,349 @@ public class GameActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+    public void insertProtocol() {
+        sum_right_count_while = 0;
+        sum_left_count_while = 0;
+        music_selected = true; // 노래를 선택했다
+
+        switch(music) {
+            case elise:
+                insertRightProtocol(R.raw.elise_right, panel);
+                insertLeftProtocol(R.raw.elise_left, panel);
+                answer_right = insertAnswerProtocol(R.raw.elise_right);
+                answer_left = insertAnswerProtocol(R.raw.elise_left);
+                break;
+
+            case nowhere:
+                insertRightProtocol(R.raw.nowhere_right, panel);
+                insertLeftProtocol(R.raw.nowhere_left, panel);
+                answer_right = insertAnswerProtocol(R.raw.nowhere_right);
+                answer_left = insertAnswerProtocol(R.raw.nowhere_left);
+                break;
+
+            case star:
+                insertRightProtocol(R.raw.star_right, panel);
+                insertLeftProtocol(R.raw.star_left, panel);
+                answer_right = insertAnswerProtocol(R.raw.star_right);
+                answer_left = insertAnswerProtocol(R.raw.star_left);
+                break;
+
+            case rabbit:
+                insertRightProtocol(R.raw.rabbit_right, panel);
+                insertLeftProtocol(R.raw.rabbit_left, panel);
+                answer_right = insertAnswerProtocol(R.raw.rabbit_right);
+                answer_left = insertAnswerProtocol(R.raw.rabbit_left);
+                break;
+        }
+    }
+
+    public void insertRightProtocol(int music_name, Panel panel) { // 오른손 프로토콜 입력
+        String strBuf = ReadTextAssets(music_name);
+        String[] lines = strBuf.split("\n");
+
+        for (String note : lines) {
+            panel.balls_right.add(new Ball(panel.getContext(), Integer.parseInt(note.trim())));
+        }
+    }
+
+    public void insertLeftProtocol(int music_name, Panel panel) { // 왼손 프로토콜 입력
+        String strBuf = ReadTextAssets(music_name);
+        String[] lines = strBuf.split("\n");
+
+        for (String note : lines) {
+            panel.balls_left.add(new Ball(panel.getContext(), Integer.parseInt(note.trim())));
+        }
+    }
+
+    public String ReadTextAssets(int music_name) {
+        String text = null;
+
+        try {
+            InputStream is = GameActivity.this.getResources().openRawResource(music_name);
+            byte[] buffer = new byte[is.available()];
+
+            is.read(buffer);
+            is.close();
+            text = new String(buffer);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return text;
+    }
+
+    public ArrayList<ArrayList> insertAnswerProtocol(int music_name) {
+        String strBuf = ReadTextAssets(music_name);
+        String[] lines = strBuf.split("\n");
+        ArrayList<ArrayList> answer = new ArrayList<>();
+
+        for(String note : lines) {
+            ArrayList<Integer> temp = new ArrayList<>();
+
+            if(Integer.parseInt(note.trim()) % 1000000 >= 100000) { // 흰건반
+                switch((Integer.parseInt(note.trim()) / 1000000) % 10) { // 옥타브
+                    case 1:
+                        switch((Integer.parseInt(note.trim()) / 100000) % 10) {
+                            case 1:
+                                temp.add(7);temp.add(8);temp.add(15);
+                                break;
+                            case 2:
+                                temp.add(10);temp.add(13);temp.add(14);
+                                break;
+                            case 3:
+                                temp.add(15);temp.add(16);
+                                break;
+                            case 4:
+                                temp.add(21);temp.add(22);
+                                break;
+                            case 5:
+                                temp.add(17);temp.add(44);
+                                break;
+                            case 6:
+                                temp.add(13);temp.add(14);
+                                break;
+                            case 7:
+                                temp.add(15);temp.add(16);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch((Integer.parseInt(note.trim()) / 100000) % 10) {
+                            case 1:
+                                temp.add(7);temp.add(15);temp.add(16);
+                                break;
+                            case 2:
+                                temp.add(9);temp.add(10);
+                                break;
+                            case 3:
+                                temp.add(21);temp.add(22);
+                                break;
+                            case 4:
+                                temp.add(21);temp.add(22);
+                                break;
+                            case 5:
+                                temp.add(11);temp.add(25);temp.add(26);
+                                break;
+                            case 6:
+                                temp.add(13);temp.add(14);
+                                break;
+                            case 7:
+                                temp.add(16);temp.add(31);
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch((Integer.parseInt(note.trim()) / 100000) % 10) {
+                            case 1:
+                                temp.add(89);
+                                break;
+                            case 2:
+                                temp.add(17);temp.add(18);
+                                break;
+                            case 3:
+                                temp.add(20);temp.add(21);
+                                break;
+                            case 4:
+                                temp.add(21);temp.add(22);
+                                break;
+                            case 5:
+                                temp.add(23);temp.add(25);
+                                break;
+                            case 6:
+                                temp.add(27);temp.add(28);
+                                break;
+                            case 7:
+                                temp.add(31);temp.add(32);
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch((Integer.parseInt(note.trim()) / 100000) % 10) {
+                            case 1:
+                                temp.add(33);temp.add(34);
+                                break;
+                            case 2:
+                                temp.add(37);temp.add(38);
+                                break;
+                            case 3:
+                                temp.add(41);temp.add(42);
+                                break;
+                            case 4:
+                                temp.add(43);temp.add(44);
+                                break;
+                            case 5:
+                                temp.add(49);temp.add(50);
+                                break;
+                            case 6:
+                                temp.add(55);temp.add(56);
+                                break;
+                            case 7:
+                                temp.add(62);temp.add(63);
+                                break;
+                        }
+                        break;
+                    case 5:
+                        switch((Integer.parseInt(note.trim()) / 100000) % 10) {
+                            case 1:
+                                temp.add(65);temp.add(67);
+                                break;
+                            case 2:
+                                temp.add(76);
+                                break;
+                            case 3:
+                                temp.add(84);
+                                break;
+                            case 4:
+                                temp.add(90);
+                                break;
+                            case 5:
+                                temp.add(99);
+                                break;
+                            case 6:
+                                temp.add(113);
+                                break;
+                            case 7:
+                                temp.add(126);
+                                break;
+                        }
+                        break;
+                }
+            } else { // 검은 건반
+                switch((Integer.parseInt(note.trim()) / 1000000) % 10) {
+                    case 1:
+                        switch((Integer.parseInt(note.trim()) / 10000) % 10) {
+                            case 1:
+                                temp.add(8);temp.add(11);temp.add(14);
+                                break;
+                            case 2:
+                                temp.add(13);temp.add(14);
+                                break;
+                            case 3:
+                                temp.add(17);temp.add(18);
+                                break;
+                            case 4:
+                                temp.add(11);temp.add(13);
+                                break;
+                            case 5:
+                                temp.add(14);temp.add(16);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch((Integer.parseInt(note.trim()) / 10000) % 10) {
+                            case 1:
+                                temp.add(17);temp.add(18);
+                                break;
+                            case 2:
+                                temp.add(9);temp.add(10);
+                                break;
+                            case 3:
+                                temp.add(11);temp.add(12);
+                                break;
+                            case 4:
+                                temp.add(13);temp.add(14);
+                                break;
+                            case 5:
+                                temp.add(13);
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch((Integer.parseInt(note.trim()) / 10000) % 10) {
+                            case 1:
+                                temp.add(89);
+                                break;
+                            case 2:
+                                temp.add(19);
+                                break;
+                            case 3:
+                                temp.add(23);temp.add(24);
+                                break;
+                            case 4:
+                                temp.add(25);temp.add(26);
+                                break;
+                            case 5:
+                                temp.add(30);temp.add(60);
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch((Integer.parseInt(note.trim()) / 10000) % 10) {
+                            case 1:
+                                temp.add(35);temp.add(36);
+                                break;
+                            case 2:
+                                temp.add(39);temp.add(40);
+                                break;
+                            case 3:
+                                temp.add(45);temp.add(47);
+                                break;
+                            case 4:
+                                temp.add(53);
+                                break;
+                            case 5:
+                                temp.add(59);temp.add(60);
+                                break;
+                        }
+                        break;
+                    case 5:
+                        switch((Integer.parseInt(note.trim()) / 10000) % 10) {
+                            case 1:
+                                temp.add(70);temp.add(71);
+                                break;
+                            case 2:
+                                temp.add(79);temp.add(80);
+                                break;
+                            case 3:
+                                temp.add(94);
+                                break;
+                            case 4:
+                                temp.add(105);
+                                break;
+                            case 5:
+                                temp.add(118);
+                                break;
+                        }
+                        break;
+                }
+            }
+
+            answer.add(temp);
+        }
+
+        return answer;
+    }
+
     public void clickPlayOrStop(View v) {
         boolean is_on = ((ToggleButton)v).isChecked();
         ToggleButton play_or_stop = (ToggleButton)findViewById(R.id.btn_play_or_stop);
 
         if(is_on) {
-            play_or_stop.setBackgroundResource(R.drawable.start);
+            play_or_stop.setBackgroundResource(R.drawable.play2);
+            velocity1.setVisibility(View.INVISIBLE);
+            velocity2.setVisibility(View.INVISIBLE);
+            velocity3.setVisibility(View.INVISIBLE);
+            velocity4.setVisibility(View.INVISIBLE);
+            velocity5.setVisibility(View.INVISIBLE);
+            velocity6.setVisibility(View.INVISIBLE);
+            velocity7.setVisibility(View.INVISIBLE);
+            velocity8.setVisibility(View.INVISIBLE);
+            //score.setVisibility(View.INVISIBLE);
+
             panel.thread = new DrawBall(panel);
             panel.thread.start();
         } else {
             play_or_stop.setBackgroundResource(R.drawable.stop);
+            velocity1.setVisibility(View.VISIBLE);
+            velocity2.setVisibility(View.VISIBLE);
+            velocity3.setVisibility(View.VISIBLE);
+            velocity4.setVisibility(View.VISIBLE);
+            velocity5.setVisibility(View.VISIBLE);
+            velocity6.setVisibility(View.VISIBLE);
+            velocity7.setVisibility(View.VISIBLE);
+            velocity8.setVisibility(View.VISIBLE);
+            //score.setVisibility(View.VISIBLE);
+
             panel.thread.setStop(true);
         }
     }
@@ -219,60 +599,22 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
 
-        changeVelocity(velocity);
-        panel.invalidate();
-    }
-
-    public void changeVelocity(float velocity) {
-        float percentage;
-
         sum_right_count_while = 0;
         sum_left_count_while = 0;
 
-        synchronized(balls_right) { // 검은색 건반에 내려오는 빛 그리기
-            for(Ball ball : balls_right) {
-                if(velocity == 1) {
-                    percentage = 0.99f;
-                } else if(velocity == 1.5) {
-                    percentage = 0.66f;
-                } else if(velocity == 2) {
-                    percentage = 0.5f;
-                } else if(velocity == 2.5) {
-                    percentage = 0.4f;
-                } else if(velocity == 3) {
-                    percentage = 0.34f;
-                } else if(velocity == 3.5) {
-                    percentage = 0.29f;
-                } else if(velocity == 4) {
-                    percentage = 0.26f;
-                } else {
-                    percentage = 0.22f;
-                }
-
-                if(ball.getProtocol() / 10000000 == 1) { // 오른손이라면, 오른손 쉼표도 해당
-                    if(ball.getProtocol() % 10 != 1) { // 동시에 치는 음이 아니라면
-                        sum_right_count_while += (ball.getProtocol() % 10000) * percentage;
-                    }
-
-                    ball.changeCount_while(sum_right_count_while); // 오른손 누적 for문 도는 개수에 추가
-                    sum_right_count_while = sum_right_count_while + 2;
-
-                } else { // 왼손이라면, 왼손 쉼표도 해당
-                    if(ball.getProtocol() % 10 != 1) { // 동시에 치는 음이 아니라면
-                        sum_left_count_while += (ball.getProtocol() % 10000) * percentage;
-                    }
-
-                    ball.changeCount_while(sum_left_count_while); // 왼손 누적 for문 도는 개수에 추가
-                    sum_left_count_while = sum_left_count_while + 2;
-                }
-
-                if(!ball.getGo_down())
-                    ball.setGo_down(true);
-
-                ball.changeLength_boundary(ball.getLength());
-                ball.setY(ball.getProtocol());
+        for(Ball ball : balls_right) {
+            if (ball.getCount_while() > 0) {
+                ball.setCount_while(ball.getProtocol(), velocity);
             }
         }
+
+        for(Ball ball : balls_left) {
+            if (ball.getCount_while() > 0) {
+                ball.setCount_while(ball.getProtocol(), velocity);
+            }
+        }
+
+        panel.invalidate();
     }
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {
@@ -280,7 +622,7 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Integer> temp_left;
         int count_right;
         int count_left;
-        int combo;
+        //int combo;
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -288,7 +630,7 @@ public class GameActivity extends AppCompatActivity {
             temp_left = new ArrayList<>();
             count_right = 0;
             count_left = 0;
-            combo = 0;
+            //combo = 0;
 
             try {
                 short[] buffer = new short[blockSize];
@@ -299,7 +641,7 @@ public class GameActivity extends AppCompatActivity {
                 while(true) {
                     int bufferReadResult = audioRecord.read(buffer, 0, blockSize);
 
-                    for(int i = 0; i < blockSize && i < bufferReadResult; i++) {
+                    for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
                         toTransform[i] = (double) buffer[i] / Short.MAX_VALUE;
                     }
 
@@ -308,8 +650,8 @@ public class GameActivity extends AppCompatActivity {
 
                     float y_last_ball = balls_right.get(balls_right.size() - 1).getY(); // 마지막으로 내려오는 막대의 y좌표
 
-                    if(y_last_ball >= y_piano_upleft + gunban.getWhiteVertical() - 1) { // 마지막 빛 막대가 판정선을 지나가면
-                        for(int i = 0; i < balls_right.size(); i++) {
+                    if (y_last_ball >= y_piano_upleft + gunban.getWhiteVertical() - 1) { // 마지막 빛 막대가 판정선을 지나가면
+                        for (int i = 0; i < balls_right.size(); i++) {
                             switch (balls_right.get(i).getCorrect()) {
                                 case GREAT:
                                     great_score++;
@@ -323,7 +665,7 @@ public class GameActivity extends AppCompatActivity {
                             }
                         }
 
-                        for(int i = 0; i < balls_left.size(); i++) {
+                        for (int i = 0; i < balls_left.size(); i++) {
                             switch (balls_left.get(i).getCorrect()) {
                                 case GREAT:
                                     great_score++;
@@ -336,21 +678,15 @@ public class GameActivity extends AppCompatActivity {
                                     break;
                             }
                         }
+
                         break;
                     }
                 }
 
                 audioRecord.stop();
-                startActivity(new Intent(GameActivity.this, ScoreActivity.class));
-                record.cancel(true);
-                ActivityCompat.finishAffinity(GameActivity.this);
-                //System.runFinalization();
-                //System.exit(0);
             } catch (Throwable t) {
                 Log.e("AudioRecord", "Recording Failed");
             }
-
-            y_piano_upleft = y_piano_upleft + 204; // 160pixel = 40dp, 보정
 
             return null;
         }
@@ -386,7 +722,7 @@ public class GameActivity extends AppCompatActivity {
                             if(balls_right.get(count_right).getCorrect() == BAD) {
                                 int init = 0; // 사용자가 친 음의 특징값 하나가 정답지에 있는지
 
-                                if(!balls_right.get(count_right).getSame()) { // 동시에 치는 음이 아니면
+                                if(!balls_right.get(count_right).getTogether()) { // 동시에 치는 음이 아니면
                                     for(int j = 0; j < answer_right.get(count_right).size(); j++) {
                                         for(int k = 0; k < temp_right.size(); k++) { // 사용자가 친 음과 비교
                                             if(answer_right.get(count_right).get(j) == temp_right.get(k)) { // 하나씩 비교, 존재한다면
@@ -405,11 +741,11 @@ public class GameActivity extends AppCompatActivity {
                                             balls_right.get(count_right).setCorrect(GOOD);
                                         }
 
-                                        combo++;
-                                        showCombo(combo);
+                                        //combo++;
+                                        //showCombo(combo);
                                     }
                                 } else { // 동시에 치는 음이면
-                                    for(int j = 0; j < balls_right.get(count_right).getSame_num(); j++) {
+                                    for(int j = 0; j < balls_right.get(count_right).getTogether_num(); j++) {
                                         for(int k = 0; k < answer_right.get(count_right).size(); k++) {
                                             for(int l = 0; l < temp_right.size(); l++) { // 사용자가 친 음과 비교
                                                 if(answer_right.get(count_right + j).get(k) == temp_right.get(l)) { // 하나씩 비교, 존재한다면
@@ -423,17 +759,17 @@ public class GameActivity extends AppCompatActivity {
 
                                     int temp_sum = 0; // 동시에 친 음들의 특징값들의 개수의 합
 
-                                    for(int j = 0; j < balls_right.get(count_right).getSame_num(); j++) {
+                                    for(int j = 0; j < balls_right.get(count_right).getTogether_num(); j++) {
                                         temp_sum += answer_right.get(count_right + j).size();
                                     }
 
                                     if(init == temp_sum) { // 동시에 친 음이 다 맞는 경우만 판단 가능
-                                        for(int j = 0; j < balls_right.get(count_right).getSame_num(); j++) {
+                                        for(int j = 0; j < balls_right.get(count_right).getTogether_num(); j++) {
                                             balls_right.get(count_right + j).setCorrect(GREAT);
                                         }
 
-                                        combo = combo + balls_right.get(count_right).getSame_num();
-                                        showCombo(combo);
+                                        //combo = combo + balls_right.get(count_right).getTogether_num();
+                                        //showCombo(combo);
                                     }
                                 }
                             }
@@ -442,10 +778,10 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 else if(y_ball >= y_piano_upleft + black_or_white - 30) {
-                    if(!balls_right.get(count_right).getSame()) { // 동시에 치는 음이 아니면
+                    if(!balls_right.get(count_right).getTogether()) { // 동시에 치는 음이 아니면
                         count_right++;
                     } else { // 동시에 치는 음이면
-                        count_right = count_right + balls_right.get(count_right).getSame_num();
+                        count_right = count_right + balls_right.get(count_right).getTogether_num();
                     }
 
                     temp_right.clear();
@@ -474,7 +810,7 @@ public class GameActivity extends AppCompatActivity {
                             if(balls_left.get(count_left).getCorrect() == BAD) {
                                 int init = 0; // 사용자가 친 음의 특징값 하나가 정답지에 있는지
 
-                                if(!balls_left.get(count_left).getSame()) { // 동시에 치는 음이 아니면
+                                if(!balls_left.get(count_left).getTogether()) { // 동시에 치는 음이 아니면
                                     for(int j = 0; j < answer_left.get(count_left).size(); j++) {
                                         for(int k = 0; k < temp_left.size(); k++) { // 사용자가 친 음과 비교
                                             if(answer_left.get(count_left).get(j) == temp_left.get(k)) { // 하나씩 비교, 존재한다면
@@ -488,15 +824,15 @@ public class GameActivity extends AppCompatActivity {
                                     if(init == answer_left.get(count_left).size()) {
                                         if(y_ball >= y_piano_upleft + black_or_white - balls_left.get(count_left).getLength() - 30 && y_ball < y_piano_upleft + black_or_white - balls_left.get(count_left).getLength() / 3 - 30) {
                                             balls_left.get(count_left).setCorrect(GREAT);
-                                            combo++;
-                                            showCombo(combo);
+                                            //combo++;
+                                            //showCombo(combo);
 
                                         } else if(y_ball >= y_piano_upleft + black_or_white - balls_left.get(count_left).getLength() / 3 - 30 && y_ball < y_piano_upleft + black_or_white - 30) {
                                             balls_left.get(count_left).setCorrect(GOOD);
                                         }
                                     }
                                 } else { // 동시에 치는 음이면
-                                    for(int j = 0; j < balls_left.get(count_left).getSame_num(); j++) {
+                                    for(int j = 0; j < balls_left.get(count_left).getTogether_num(); j++) {
                                         for(int k = 0; k < answer_left.get(count_left).size(); k++) {
                                             for(int l = 0; l < temp_left.size(); l++) { // 사용자가 친 음과 비교
                                                 if(answer_left.get(count_left + j).get(k) == temp_left.get(l)) { // 하나씩 비교, 존재한다면
@@ -510,27 +846,27 @@ public class GameActivity extends AppCompatActivity {
 
                                     int temp_sum = 0; // 동시에 친 음들의 특징값들의 개수의 합
 
-                                    for(int j = 0; j < balls_left.get(count_left).getSame_num(); j++) {
+                                    for(int j = 0; j < balls_left.get(count_left).getTogether_num(); j++) {
                                         temp_sum += answer_left.get(count_left + j).size();
                                     }
 
                                     if(init == temp_sum) {
-                                        for(int j = 0; j < balls_left.get(count_left).getSame_num(); j++) {
+                                        for(int j = 0; j < balls_left.get(count_left).getTogether_num(); j++) {
                                             balls_left.get(count_left + j).setCorrect(GREAT);
                                         }
 
-                                        combo = combo + balls_left.get(count_left).getSame_num();
-                                        showCombo(combo);
+                                        //combo = combo + balls_left.get(count_left).getTogether_num();
+                                        //showCombo(combo);
                                     }
                                 }
                             }
                         }
                     }
                 } else if(y_ball >= y_piano_upleft + black_or_white - 30) {
-                    if(!balls_left.get(count_left).getSame()) { // 동시에 치는 음이 아니면
+                    if(!balls_left.get(count_left).getTogether()) { // 동시에 치는 음이 아니면
                         count_left++;
                     } else { // 동시에 치는 음이면
-                        count_left = count_left + balls_left.get(count_left).getSame_num();
+                        count_left = count_left + balls_left.get(count_left).getTogether_num();
                     }
 
                     temp_left.clear();
@@ -539,7 +875,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void showCombo(int combo) {
+    /*public void showCombo(int combo) {
         ImageView combo1 = (ImageView)findViewById(R.id.c_img1);
         ImageView combo2 = (ImageView)findViewById(R.id.c_img2);
         ImageView combo3 = (ImageView)findViewById(R.id.c_img3);
@@ -652,15 +988,28 @@ public class GameActivity extends AppCompatActivity {
             default:
                 break;
         }
-    }
+    }*/
 
     public void moveActivity(View v) {
+        panel.balls_right.clear();
+        panel.balls_left.clear();
+        answer_right.clear();
+        answer_left.clear();
+
+        audioRecord.stop();
+        record.cancel(true);
+
+        ImageView play = (ImageView)findViewById(R.id.play);
         ImageView music = (ImageView)findViewById(R.id.music);
         ImageView set = (ImageView)findViewById(R.id.set);
         ImageView back = (ImageView)findViewById(R.id.back);
         ImageView home = (ImageView)findViewById(R.id.home);
 
         switch(v.getId()) {
+            case R.id.play:
+                play.setBackgroundResource(R.drawable.btn_play_entered);
+                startActivity(new Intent(GameActivity.this, GameActivity.class));
+                break;
             case R.id.music:
                 music.setBackgroundResource(R.drawable.btn_music_entered);
                 startActivity(new Intent(GameActivity.this, SelectGenreActivity.class));
@@ -677,20 +1026,28 @@ public class GameActivity extends AppCompatActivity {
                 home.setBackgroundResource(R.drawable.btn_home_entered);
                 startActivity(new Intent(GameActivity.this, MenuActivity.class));
                 break;
+            case R.id.score:
+                score.setBackgroundResource(R.drawable.score2_entered);
+                startActivity(new Intent(GameActivity.this, ScoreActivity.class));
+                break;
         }
 
-        record.cancel(true);
         ActivityCompat.finishAffinity(this);
-        System.runFinalization();
-        System.exit(0);
-        y_piano_upleft = y_piano_upleft + 204; // 160pixel = 40dp
+        y_piano_upleft = y_piano_upleft + 218; // 160pixel = 40dp
     }
 
     public void onBackPressed() {
-        startActivity(new Intent(GameActivity.this, SelectMusicActivity.class));
+        panel.balls_right.clear();
+        panel.balls_left.clear();
+        answer_right.clear();
+        answer_left.clear();
+
+        audioRecord.stop();
         record.cancel(true);
+
+        startActivity(new Intent(GameActivity.this, SelectMusicActivity.class));
         ActivityCompat.finishAffinity(this);
-        System.runFinalization();
-        System.exit(0);
+
+        y_piano_upleft = y_piano_upleft + 218; // 160pixel = 40dp
     }
 }

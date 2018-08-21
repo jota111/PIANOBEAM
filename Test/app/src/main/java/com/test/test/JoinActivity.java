@@ -2,6 +2,7 @@ package com.test.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -17,18 +18,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Date;
 import java.util.Iterator;
 
-import static com.test.test.Gunban.count_size_change;
-import static com.test.test.SetPianoOctaveActivity.gunban;
-import static com.test.test.Gunban.white_vertical;
-import static com.test.test.Gunban.black_vertical;
 import static com.test.test.DrawGunban.x_piano_upleft;
 import static com.test.test.DrawGunban.y_piano_upleft;
+import static com.test.test.Gunban.white_vertical;
+import static com.test.test.Gunban.black_vertical;
+import static com.test.test.Gunban.count_size_change;
+import static com.test.test.SetPianoOctaveActivity.gunban;
 
 public class JoinActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private EditText ID;
     private EditText Password;
     private EditText Name;
+    private ImageView back;
     private ImageView join;
 
     @Override
@@ -42,8 +44,18 @@ public class JoinActivity extends AppCompatActivity {
         ID = (EditText)findViewById(R.id.id);
         Name = (EditText)findViewById(R.id.name);
         Password = (EditText)findViewById(R.id.password);
-
+        back = (ImageView)findViewById(R.id.back);
         join = (ImageView)findViewById(R.id.join);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back.setBackgroundResource(R.drawable.back_entered);
+                startActivity(new Intent(JoinActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +72,7 @@ public class JoinActivity extends AppCompatActivity {
 
             while(child.hasNext()) {
                 if(ID.getText().toString().equals(child.next().getKey())) {
-                    Toast.makeText(getApplicationContext(), "존재하는 아이디 입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "존재하는 아이디입니다.", Toast.LENGTH_LONG).show();
                     databaseReference.removeEventListener(this);
 
                     return;
@@ -92,11 +104,11 @@ public class JoinActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
         startActivity(new Intent(JoinActivity.this, LoginActivity.class));
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void onBackPressed() {
         startActivity(new Intent(JoinActivity.this, LoginActivity.class));
-        JoinActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

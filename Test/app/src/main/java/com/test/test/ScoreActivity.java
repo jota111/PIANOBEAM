@@ -2,10 +2,15 @@ package com.test.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import static com.test.test.DrawGunban.y_piano_upleft;
+import static com.test.test.LoginActivity.id;
 
 public class ScoreActivity extends AppCompatActivity {
     public static final int GREAT = 100;
@@ -15,11 +20,16 @@ public class ScoreActivity extends AppCompatActivity {
     public static int good_score;
     public static int bad_score;
 
+    private TextView showid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score);
         getSupportActionBar().hide();
+
+        showid = (TextView)findViewById(R.id.id);
+        showid.setText(id.getText().toString());
 
         int great_score_hun = great_score / 100;
         int great_score_ten = (great_score / 10) % 10;
@@ -514,51 +524,38 @@ public class ScoreActivity extends AppCompatActivity {
             case R.id.play:
                 play.setBackgroundResource(R.drawable.btn_play_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
-                ScoreActivity.this.finishAffinity();
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.music:
                 music.setBackgroundResource(R.drawable.btn_music_entered);
-                startActivity(new Intent(ScoreActivity.this, SetPianoActivity.class));
-                ScoreActivity.this.finishAffinity();
+                startActivity(new Intent(ScoreActivity.this, SelectGenreActivity.class));
                 break;
             case R.id.set:
                 set.setBackgroundResource(R.drawable.btn_set_entered);
                 startActivity(new Intent(ScoreActivity.this, SetPianoActivity.class));
-                ScoreActivity.this.finishAffinity();
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.back:
                 back.setBackgroundResource(R.drawable.btn_back_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
-                ScoreActivity.this.finishAffinity();
                 break;
             case R.id.home:
                 home.setBackgroundResource(R.drawable.btn_home_entered);
                 startActivity(new Intent(ScoreActivity.this, MenuActivity.class));
-                ScoreActivity.this.finishAffinity();
-                System.runFinalization();
-                System.exit(0);
                 break;
             case R.id.replay:
                 replay.setBackgroundResource(R.drawable.replay_entered);
                 startActivity(new Intent(ScoreActivity.this, GameActivity.class));
-                ScoreActivity.this.finishAffinity();
                 break;
             case R.id.home2:
                 home2.setBackgroundResource(R.drawable.home_entered);
                 startActivity(new Intent(ScoreActivity.this, MenuActivity.class));
-                ScoreActivity.this.finishAffinity();
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void onBackPressed() {
         startActivity(new Intent(ScoreActivity.this, GameActivity.class));
-        ScoreActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

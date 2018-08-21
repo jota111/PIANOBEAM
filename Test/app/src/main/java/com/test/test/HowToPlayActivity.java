@@ -2,6 +2,7 @@ package com.test.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,8 @@ import android.widget.LinearLayout;
 import static com.test.test.LoginActivity.music_selected;
 
 public class HowToPlayActivity extends AppCompatActivity {
-    ViewPager viewPager;
-    LinearLayout sliderDotspanel;
+    private ViewPager viewPager;
+    private LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
 
@@ -103,10 +104,10 @@ public class HowToPlayActivity extends AppCompatActivity {
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
     public void onBackPressed() {
         startActivity(new Intent(HowToPlayActivity.this, MenuActivity.class));
-        HowToPlayActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

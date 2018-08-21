@@ -8,9 +8,9 @@
     tools:context="com.test.test.CameraActivity">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="52dp"
+        android:orientation="horizontal"
         android:background="@drawable/bar_back">
 
         <ImageView
@@ -64,9 +64,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:orientation="vertical"
             android:gravity="center">
 
             <ImageView
@@ -94,7 +94,6 @@
             android:layout_width="4dp"
             android:layout_height="wrap_content"
             android:background="@drawable/boundary"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"

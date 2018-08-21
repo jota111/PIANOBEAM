@@ -1,16 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/game"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.test.test.GameActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:background="@drawable/bar_back"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/bar_back">
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="213dp"
+            android:textSize="23dp"
+            android:textColor="#FFFFFF"/>
 
         <ImageView
             android:id="@+id/play"
@@ -59,115 +68,98 @@
         android:background="#000000">
 
         <ImageView
-            android:id="@+id/combo_img"
-            android:layout_width="53dp"
-            android:layout_height="20dp"
+            android:id="@+id/btn_velocity1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="3dp"
-            android:background="@drawable/combo"/>
+            android:background="@drawable/btn_velocity1"
+            android:onClick="clickVelocity"/>
 
         <ImageView
-            android:id="@+id/c_img1"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:id="@+id/btn_velocity2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/combo_img"
-            android:background="@drawable/green0"/>
+            android:layout_toRightOf="@+id/btn_velocity1"
+            android:background="@drawable/btn_velocity2"
+            android:onClick="clickVelocity"/>
 
         <ImageView
-            android:id="@+id/c_img2"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:id="@+id/btn_velocity3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/c_img1"
-            android:background="@drawable/blue0"/>
+            android:layout_toRightOf="@+id/btn_velocity2"
+            android:background="@drawable/btn_velocity3"
+            android:onClick="clickVelocity"/>
 
         <ImageView
-            android:id="@+id/c_img3"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:id="@+id/btn_velocity4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/c_img2"
-            android:background="@drawable/red0"/>
+            android:layout_toRightOf="@+id/btn_velocity3"
+            android:background="@drawable/btn_velocity4"
+            android:onClick="clickVelocity"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+        <ImageView
+            android:id="@+id/btn_velocity5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_toRightOf="@+id/btn_velocity4"
+            android:background="@drawable/btn_velocity5"
+            android:onClick="clickVelocity"/>
 
-            <ImageView
-                android:id="@+id/btn_velocity1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity1"
-                android:onClick="clickVelocity"/>
+        <ImageView
+            android:id="@+id/btn_velocity6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_velocity5"
+            android:background="@drawable/btn_velocity6"
+            android:onClick="clickVelocity"/>
 
-            <ImageView
-                android:id="@+id/btn_velocity2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity2"
-                android:onClick="clickVelocity"/>
+        <ImageView
+            android:id="@+id/btn_velocity7"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_velocity6"
+            android:background="@drawable/btn_velocity7"
+            android:onClick="clickVelocity"/>
 
-            <ImageView
-                android:id="@+id/btn_velocity3"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity3"
-                android:onClick="clickVelocity"/>
-
-            <ImageView
-                android:id="@+id/btn_velocity4"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity4"
-                android:onClick="clickVelocity"/>
-
-            <ImageView
-                android:id="@+id/btn_velocity5"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity5"
-                android:onClick="clickVelocity"/>
-
-            <ImageView
-                android:id="@+id/btn_velocity6"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity6"
-                android:onClick="clickVelocity"/>
-
-            <ImageView
-                android:id="@+id/btn_velocity7"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity7"
-                android:onClick="clickVelocity"/>
-
-            <ImageView
-                android:id="@+id/btn_velocity8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_velocity8"
-                android:onClick="clickVelocity"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btn_velocity8"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_velocity7"
+            android:background="@drawable/btn_velocity8"
+            android:onClick="clickVelocity"/>
 
         <ToggleButton
             android:id="@+id/btn_play_or_stop"
-            android:layout_width="65dp"
+            android:layout_width="85dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/score"
+            android:layout_marginRight="20dp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/play2"
+            android:onClick="clickPlayOrStop"/>
+
+        <ImageView
+            android:id="@+id/score"
+            android:layout_width="85dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:textOn=""
-            android:textOff=""
-            android:background="@drawable/start"
-            android:onClick="clickPlayOrStop"/>
+            android:layout_marginRight="20dp"
+            android:background="@drawable/score2"
+            android:onClick="moveActivity"/>
     </RelativeLayout>
 
     <ImageView

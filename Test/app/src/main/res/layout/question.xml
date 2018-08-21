@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/backgorund2">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="52dp"
+        android:orientation="horizontal"
         android:background="@drawable/bar_back">
 
         <ImageView

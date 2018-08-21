@@ -31,7 +31,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:hint="아이디 입력"
-            android:textColorHint="#356a4c"
+            android:textColorHint="#333333"
             android:textColor="#ffffff" />
 
         <ImageView
@@ -45,7 +45,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:hint="비밀번호 입력"
-            android:textColorHint="#356a4c"
+            android:textColorHint="#333333"
             android:textColor="#ffffff"/>
 
         <ImageView

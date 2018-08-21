@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import static com.test.test.SelectGenreActivity.kpop_selected;
 import static com.test.test.SelectGenreActivity.popsong_selected;
 import static com.test.test.SelectGenreActivity.ost_selected;
 import static com.test.test.SelectGenreActivity.childrensong_selected;
-import static com.test.test.LoginActivity.music_selected;
 
 public class SelectMusicPagerAdapter extends PagerAdapter {
     public static final int elise = 0;
     public static final int nowhere = 1;
     public static final int star = 2;
+    public static final int rabbit = 3;
     public static int music;
 
     private Context context;
@@ -64,7 +63,7 @@ public class SelectMusicPagerAdapter extends PagerAdapter {
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.content_select_music, null);
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        final ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         imageView.setBackgroundResource(musics[position]);
         ViewPager vp = (ViewPager)container;
         vp.addView(view, 0);
@@ -72,26 +71,39 @@ public class SelectMusicPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(genre) {
-                    case classic_selected:
-                        switch(position) {
-                            case elise:
-                                //imageView.setBackgroundResource(R.drawable.nowhere_entered);
+                switch(position) {
+                    case 0:
+                        switch(genre) {
+                            case classic_selected:
+                                imageView.setBackgroundResource(R.drawable.elise_entered);
                                 music = elise;
-                                v.getContext().startActivity(new Intent(v.getContext(), GameActivity.class));
                                 break;
-                        }
-                        break;
-                    case childrensong_selected:
-                        switch(position) {
-                            case star:
-                                //imageView.setBackgroundResource(R.drawable.star_entered);
+                            case kpop_selected:
+                                imageView.setBackgroundResource(R.drawable.nowhere_entered);
+                                music = nowhere;
+                                break;
+                            case childrensong_selected:
+                                imageView.setBackgroundResource(R.drawable.star_entered);
                                 music = star;
-                                v.getContext().startActivity(new Intent(v.getContext(), GameActivity.class));
                                 break;
                         }
+
+                        break;
+
+                    case 1:
+                         //imageView.setBackgroundResource(R.drawable.nowhere_entered);
+
+                        switch(genre) {
+                            case childrensong_selected:
+                                imageView.setBackgroundResource(R.drawable.rabbit_entered);
+                                music = rabbit;
+                                break;
+                        }
+
                         break;
                 }
+
+                v.getContext().startActivity(new Intent(v.getContext(), GameActivity.class));
             }
         });
 

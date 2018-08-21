@@ -12,15 +12,17 @@ import android.widget.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.test.test.Gunban.count_size_change;
+import static com.test.test.LoginActivity.logindatabaseReference;
 import static com.test.test.SetPianoOctaveActivity.gunban;
-import static com.test.test.SetPianoOctaveActivity.draw_piano;
 
 public class SetPianoHorizontalActivity extends Fragment {
-    View view;
-    Timer timer_plus;
-    Timer timer_minus;
-    TimerTask timerTask_plus;
-    TimerTask timerTask_minus;
+    private View view;
+    private Timer timer_plus;
+    private Timer timer_minus;
+    private TimerTask timerTask_plus;
+    private TimerTask timerTask_minus;
+    private DrawGunban draw_gunban;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class SetPianoHorizontalActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.set_horizontal, container, false);
-        draw_piano = (DrawGunban)view.findViewById(R.id.piano);
-        draw_piano.invalidate();
+        draw_gunban = (DrawGunban)view.findViewById(R.id.piano);
+        draw_gunban.invalidate();
 
         final ImageView plus_horizontal = (ImageView)view.findViewById(R.id.btn_plus_horizontal);
         final ImageView minus_horizontal = (ImageView)view.findViewById(R.id.btn_minus_horizontal);
@@ -66,7 +68,8 @@ public class SetPianoHorizontalActivity extends Fragment {
                     @Override
                     public void run() {
                         gunban.plusCountSizeChange();
-                        draw_piano.invalidate();
+                        //logindatabaseReference.child("count_size_change").setValue(count_size_change);
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -84,7 +87,8 @@ public class SetPianoHorizontalActivity extends Fragment {
                     @Override
                     public void run() {
                         gunban.minusCountSizeChange();
-                        draw_piano.invalidate();
+                        //logindatabaseReference.child("count_size_change").setValue(count_size_change);
+                        draw_gunban.invalidate();
                     }
                 });
             }
@@ -111,7 +115,7 @@ public class SetPianoHorizontalActivity extends Fragment {
                                         @Override
                                         public void run() {
                                             gunban.plusCountSizeChange();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -131,11 +135,13 @@ public class SetPianoHorizontalActivity extends Fragment {
 
                         if(timer_plus != null) {
                             timer_plus.cancel();
-                            timer_plus=null;
+                            timer_plus = null;
                         }
 
                         break;
                 }
+
+                logindatabaseReference.child("count_size_change").setValue(count_size_change);
 
                 return true;
             }
@@ -157,7 +163,7 @@ public class SetPianoHorizontalActivity extends Fragment {
                                         @Override
                                         public void run() {
                                             gunban.minusCountSizeChange();
-                                            draw_piano.invalidate();
+                                            draw_gunban.invalidate();
                                         }
                                     });
                                 }
@@ -177,10 +183,12 @@ public class SetPianoHorizontalActivity extends Fragment {
 
                         if(timer_minus != null) {
                             timer_minus.cancel();
-                            timer_minus=null;
+                            timer_minus = null;
                         }
                         break;
                 }
+
+                logindatabaseReference.child("count_size_change").setValue(count_size_change);
 
                 return true;
             }

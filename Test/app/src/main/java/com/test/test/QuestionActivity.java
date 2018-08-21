@@ -2,6 +2,7 @@ package com.test.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,11 +51,11 @@ public class QuestionActivity extends AppCompatActivity {
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
 
     public void onBackPressed() {
         startActivity(new Intent(QuestionActivity.this, MenuActivity.class));
-        QuestionActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }

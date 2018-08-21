@@ -11,11 +11,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import static com.test.test.DrawGunban.y_piano_upleft;
+import static com.test.test.LoginActivity.logindatabaseReference;
 
 public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
     public static Gunban gunban = new Gunban();
-    public static DrawGunban draw_piano;
-    View view;
+
+    private View view;
+    private DrawGunban draw_gunban;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +45,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.set_octave, container, false);
-        draw_piano = (DrawGunban)view.findViewById(R.id.piano);
-        draw_piano.invalidate();
+        draw_gunban = (DrawGunban)view.findViewById(R.id.piano);
+        draw_gunban.invalidate();
 
         final ImageView octave2 = (ImageView)view.findViewById(R.id.btn_octave2);
         final ImageView octave3 = (ImageView)view.findViewById(R.id.btn_octave3);
@@ -63,8 +65,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6);
                 octave7.setBackgroundResource(R.drawable.octave7);
                 gunban.setOctave(2);
-                draw_piano.invalidate();
-
+                logindatabaseReference.child("gunban_octave").setValue(2);
+                draw_gunban.invalidate();
             }
         });
 
@@ -78,7 +80,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6);
                 octave7.setBackgroundResource(R.drawable.octave7);
                 gunban.setOctave(3);
-                draw_piano.invalidate();
+                logindatabaseReference.child("gunban_octave").setValue(3);
+                draw_gunban.invalidate();
             }
         });
 
@@ -92,7 +95,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6);
                 octave7.setBackgroundResource(R.drawable.octave7);
                 gunban.setOctave(4);
-                draw_piano.invalidate();
+                logindatabaseReference.child("gunban_octave").setValue(4);
+                draw_gunban.invalidate();
             }
         });
 
@@ -106,7 +110,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6);
                 octave7.setBackgroundResource(R.drawable.octave7);
                 gunban.setOctave(5);
-                draw_piano.invalidate();
+                logindatabaseReference.child("gunban_octave").setValue(5);
+                draw_gunban.invalidate();
             }
         });
 
@@ -120,7 +125,8 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6_entered);
                 octave7.setBackgroundResource(R.drawable.octave7);
                 gunban.setOctave(6);
-                draw_piano.invalidate();
+                logindatabaseReference.child("gunban_octave").setValue(6);
+                draw_gunban.invalidate();
             }
         });
 
@@ -134,19 +140,22 @@ public class SetPianoOctaveActivity extends android.support.v4.app.Fragment {
                 octave6.setBackgroundResource(R.drawable.octave6);
                 octave7.setBackgroundResource(R.drawable.octave7_entered);
                 gunban.setOctave(7);
-                draw_piano.invalidate();
+                logindatabaseReference.child("gunban_octave").setValue(7);
+                draw_gunban.invalidate();
             }
         });
 
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this.getContext());
 
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+
         if(isFirstRun) {
             setDisplay();
             SharedPreferences.Editor editor = wmbPreference.edit();
             editor.putBoolean("FIRSTRUN", false);
             editor.apply();
         }
+
         return view;
     }
 

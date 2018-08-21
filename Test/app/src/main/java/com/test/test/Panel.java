@@ -10,10 +10,9 @@ import java.util.List;
 class Panel extends SurfaceView implements SurfaceHolder.Callback {
     public static int surface_width;
     public static int surface_height;
-
     public static List<Ball> balls_right = new ArrayList<>();
     public static List<Ball> balls_left = new ArrayList<>();
-    public DrawBall thread = new DrawBall(this);
+    public DrawBall thread;
 
     public Panel(Context context) {
         super(context);
@@ -22,11 +21,8 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if(thread.isAlive()){
-            thread.interrupt();
-        }
-
         thread = new DrawBall(this);
+
         thread.start();
     }
 
@@ -38,5 +34,6 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+
     }
 }

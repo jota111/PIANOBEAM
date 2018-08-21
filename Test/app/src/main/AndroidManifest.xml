@@ -7,14 +7,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appimage"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Intro"
-            android:screenOrientation="landscape">
+            android:screenOrientation="reverseLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -22,36 +22,36 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".MenuActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".QuestionActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".SelectMusicActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".SelectGenreActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".CameraActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".HowToPlayActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".SetPianoActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".ScoreActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
         <activity
             android:name=".JoinActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="reverseLandscape"/>
     </application>
 </manifest>

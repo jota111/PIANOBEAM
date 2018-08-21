@@ -3,19 +3,27 @@ package com.test.test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import static com.test.test.LoginActivity.music_selected;
+import static com.test.test.LoginActivity.id;
 
 public class SetPianoActivity extends AppCompatActivity implements SetPianoOctaveActivity.OnFragmentInteractionListener, SetPianoPositionActivity.OnFragmentInteractionListener, SetPianoVerticalActivity.OnFragmentInteractionListener, SetPianoHorizontalActivity.OnFragmentInteractionListener{
+    private TextView showid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_piano);
         getSupportActionBar().hide();
+
+        showid = (TextView)findViewById(R.id.id);
+        showid.setText(id.getText().toString());
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("옥타브 설정"));
@@ -64,35 +72,30 @@ public class SetPianoActivity extends AppCompatActivity implements SetPianoOctav
                 } else {
                     startActivity(new Intent(SetPianoActivity.this, SelectGenreActivity.class));
                 }
-
-                finish();
                 break;
             case R.id.music:
                 music.setBackgroundResource(R.drawable.btn_music_entered);
                 startActivity(new Intent(SetPianoActivity.this, SelectGenreActivity.class));
-
                 break;
             case R.id.set:
                 set.setBackgroundResource(R.drawable.btn_set_entered);
                 startActivity(new Intent(SetPianoActivity.this, SetPianoActivity.class));
-
                 break;
             case R.id.back:
                 back.setBackgroundResource(R.drawable.btn_back_entered);
                 startActivity(new Intent(SetPianoActivity.this, MenuActivity.class));
-
                 break;
             case R.id.home:
                 home.setBackgroundResource(R.drawable.btn_home_entered);
                 startActivity(new Intent(SetPianoActivity.this, MenuActivity.class));
-
                 break;
         }
 
-        finish();
+        ActivityCompat.finishAffinity(this);
     }
+
     public void onBackPressed() {
         startActivity(new Intent(SetPianoActivity.this, MenuActivity.class));
-        SetPianoActivity.this.finishAffinity();
+        ActivityCompat.finishAffinity(this);
     }
 }
